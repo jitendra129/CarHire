@@ -5,6 +5,13 @@
 //  Created by ASK ONLINE  on 30/06/17.
 //  Copyright © 2017 ASK ONLINE. All rights reserved.
 //
+let GRANT_TYPE:String = "client_credentials"
+let CLIENT_ID:String = "testclient"
+let CLIENT_SECRET:String = "testpass"
+let SERVERURLPATH:String = "http://webdevelopmentreviews.net/carsgates/webservices/webservice/"
+let IMAGESBASEURL:String = "http://webdevelopmentreviews.net/carrental/upload/"
+let ACCESSTOKENURL:String = "http://webdevelopmentreviews.net/carsgates/webservices/"
+
 
 import UIKit
 
@@ -13,10 +20,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    fileprivate func createMenuView() {
+        
+        // create viewController code...
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let mainViewController = storyboard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+        let leftViewController = storyboard.instantiateViewController(withIdentifier: "LeftViewController") as! LeftViewController
+        let rightViewController = storyboard.instantiateViewController(withIdentifier: "RightViewController") as! RightViewController
+        
+        let nvc: UINavigationController = UINavigationController(rootViewController: mainViewController)
+        
+       // UINavigationBar.appearance().tintColor = UIColor(hex: "689F38")
+        
+        leftViewController.mainViewController = nvc
+        
+        let slideMenuController = ExSlideMenuController(mainViewController:nvc, leftMenuViewController: leftViewController, rightMenuViewController: rightViewController)
+        slideMenuController.automaticallyAdjustsScrollViewInsets = true
+        slideMenuController.delegate = mainViewController
+     //   self.window?.backgroundColor = UIColor(red: 236.0, green: 238.0, blue: 241.0, alpha: 1.0)
+        self.window?.rootViewController = slideMenuController
+        self.window?.makeKeyAndVisible()
+    }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+       
+//        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//       let  viewController = storyBoard.instantiateViewController(withIdentifier: "ViewController") as! ViewController
+//
+//         //viewController = ViewController(nibName: nil, bundle:nil) //ViewController = Name of your controller
+//        let navigationController = UINavigationController(rootViewController: viewController)
+//        
+//        self.window = UIWindow(frame: UIScreen.main.bounds)
+//        self.window?.rootViewController = navigationController
+//        self.window?.makeKeyAndVisible()
+ self.createMenuView()
         return true
+       
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
